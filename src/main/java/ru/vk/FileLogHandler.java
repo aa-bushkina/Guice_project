@@ -20,8 +20,8 @@ public class FileLogHandler
 
   }
 
-  public void makeLog(@NotNull final String text, @NotNull final String tag)
+  public void makeLog(final int uniqueNum, @NotNull final String text, @NotNull final String tag)
   {
-      fileLogger.run(text, tag);
+      fileLogger.run(uniqueNum, text, tag);
   }
 }

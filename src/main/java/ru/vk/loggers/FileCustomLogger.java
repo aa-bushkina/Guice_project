@@ -3,7 +3,6 @@ package ru.vk.loggers;
 import com.google.inject.Singleton;
 import org.apache.log4j.LogManager;
 import org.apache.log4j.Logger;
-import org.apache.log4j.PropertyConfigurator;
 import org.jetbrains.annotations.NotNull;
 
 @Singleton
@@ -18,8 +17,8 @@ public class FileCustomLogger implements CustomLogger
   }
 
   @Override
-  public void run(@NotNull final String text, @NotNull final String tag)
+  public void run(final int uniqueNum, @NotNull final String text, @NotNull final String tag)
   {
-    logger.info("<" + tag + ">" + text + "</" + tag + ">");
+    logger.info(uniqueNum + " <" + tag + ">" + text + "</" + tag + ">");
   }
 }

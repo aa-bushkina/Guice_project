@@ -4,5 +4,5 @@ import org.jetbrains.annotations.NotNull;
 
 public interface CustomLogger
 {
-  void run(@NotNull final String text, @NotNull final String tag);
+  void run(final int uniqueNum, @NotNull final String text, @NotNull final String tag);
 }

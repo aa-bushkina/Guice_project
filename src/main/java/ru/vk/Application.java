@@ -29,17 +29,18 @@ public class Application
     try (Scanner scanner = new Scanner(System.in))
     {
       String text;
+      int uniqueNum = 0;
       System.out.println("Waiting for new lines. Key in Ctrl+D to exit.");
       while (true)
       {
         text = scanner.nextLine();
         if (logType.equals("console") || logType.equals("composite"))
         {
-          injector.getInstance(ConsoleLogHandler.class).makeLog(text, tag);
+          injector.getInstance(ConsoleLogHandler.class).makeLog(++uniqueNum, text, tag);
         }
         if (logType.equals("file") || logType.equals("composite"))
         {
-          injector.getInstance(FileLogHandler.class).makeLog(text, tag);
+          injector.getInstance(FileLogHandler.class).makeLog(++uniqueNum, text, tag);
         }
       }
     } catch (IllegalStateException | NoSuchElementException e)

@@ -12,15 +12,14 @@ public class ConsoleLogHandler
   @NotNull
   private final CustomLogger consoleLogger;
 
-
   @Inject
   public ConsoleLogHandler(@NotNull final @Console CustomLogger consoleLogger)
   {
     this.consoleLogger = consoleLogger;
   }
 
-  public void makeLog(@NotNull final String text, @NotNull final String tag)
+  public void makeLog(final int uniqueNum, @NotNull final String text, @NotNull final String tag)
   {
-    consoleLogger.run(text, tag);
+    consoleLogger.run(uniqueNum, text, tag);
   }
 }

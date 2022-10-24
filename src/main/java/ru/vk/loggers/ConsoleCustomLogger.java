@@ -18,8 +18,8 @@ public class ConsoleCustomLogger implements CustomLogger
   }
 
   @Override
-  public void run(@NotNull final String text, @NotNull final String tag)
+  public void run(final int uniqueNum, @NotNull final String text, @NotNull final String tag)
   {
-    logger.info("<" + tag + ">" + text + "</" + tag + ">");
+    logger.info(uniqueNum + " <" + tag + ">" + text + "</" + tag + ">");
   }
 }
