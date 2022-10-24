@@ -33,11 +33,11 @@ public class Application
       while (true)
       {
         text = scanner.nextLine();
-        if (logType.equals("0") || logType.equals("2"))
+        if (logType.equals("console") || logType.equals("composite"))
         {
           injector.getInstance(ConsoleLogHandler.class).makeLog(text, tag);
         }
-        if (logType.equals("1") || logType.equals("2"))
+        if (logType.equals("file") || logType.equals("composite"))
         {
           injector.getInstance(FileLogHandler.class).makeLog(text, tag);
         }
@@ -51,6 +51,6 @@ public class Application
   public boolean checkArgs(@NotNull String[] args)
   {
     return args.length == 2 &&
-      (args[0].equals("0") || args[0].equals("1") || args[0].equals("2"));
+      (args[0].equals("console") || args[0].equals("file") || args[0].equals("composite"));
   }
 }
