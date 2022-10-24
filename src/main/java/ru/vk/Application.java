@@ -9,19 +9,48 @@ import java.util.Scanner;
 
 public class Application
 {
+  static private Injector injector;
+
   public static void main(@NotNull String[] args)
   {
-    final Injector injector = Guice.createInjector(/*modules*/);
-    injector.getInstance(Application.class).waitForInput();
+    injector = Guice.createInjector(new TextHandlerModule());
+    injector.getInstance(Application.class).waitForInput(args);
   }
 
-  public void waitForInput() {
-    try (Scanner scanner = new Scanner(System.in)) {
-      System.out.println("Waiting for new lines. Key in Ctrl+D to exit.");
-      while (true) {
-        /*your code here*/
-      }
-    } catch (IllegalStateException | NoSuchElementException e) {
+  public void waitForInput(@NotNull String[] args)
+  {
+    if (!checkArgs(args))
+    {
+      System.out.println("Incorrect args.");
+      return;
     }
+    String logType = args[0];
+    String tag = args[1];
+    try (Scanner scanner = new Scanner(System.in))
+    {
+      String text;
+      System.out.println("Waiting for new lines. Key in Ctrl+D to exit.");
+      while (true)
+      {
+        text = scanner.nextLine();
+        if (logType.equals("0") || logType.equals("2"))
+        {
+          injector.getInstance(ConsoleLogHandler.class).makeLog(text, tag);
+        }
+        if (logType.equals("1") || logType.equals("2"))
+        {
+          injector.getInstance(FileLogHandler.class).makeLog(text, tag);
+        }
+      }
+    } catch (IllegalStateException | NoSuchElementException e)
+    {
+      e.printStackTrace();
+    }
+  }
+
+  public boolean checkArgs(@NotNull String[] args)
+  {
+    return args.length == 2 &&
+      (args[0].equals("0") || args[0].equals("1") || args[0].equals("2"));
   }
 }
