@@ -4,6 +4,7 @@ import com.google.inject.Guice;
 import com.google.inject.Injector;
 import org.jetbrains.annotations.NotNull;
 
+import java.util.Arrays;
 import java.util.NoSuchElementException;
 import java.util.Scanner;
 
@@ -21,8 +22,7 @@ public class Application
   {
     if (!checkArgs(args))
     {
-      System.out.println("Incorrect args.");
-      return;
+      throw new RuntimeException("Incorrect args.");
     }
     String logType = args[0];
     String tag = args[1];
@@ -34,14 +34,9 @@ public class Application
       while (true)
       {
         text = scanner.nextLine();
-        if (logType.equals("console") || logType.equals("composite"))
-        {
-          injector.getInstance(ConsoleLogHandler.class).makeLog(++uniqueNum, text, tag);
-        }
-        if (logType.equals("file") || logType.equals("composite"))
-        {
-          injector.getInstance(FileLogHandler.class).makeLog(++uniqueNum, text, tag);
-        }
+        injector.getInstance(LogTypeFactory.valueOf(logType).handlerClass())
+          .makeLog(uniqueNum, text, tag);
+        uniqueNum+=2;
       }
     } catch (IllegalStateException | NoSuchElementException e)
     {
@@ -51,7 +46,6 @@ public class Application
 
   public boolean checkArgs(@NotNull String[] args)
   {
-    return args.length == 2 &&
-      (args[0].equals("console") || args[0].equals("file") || args[0].equals("composite"));
+    return (args.length == 2) && (Arrays.asList("File", "Console", "Composite").contains(args[0]));
   }
 }

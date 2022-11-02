@@ -6,12 +6,12 @@ import org.apache.log4j.Logger;
 import org.jetbrains.annotations.NotNull;
 
 @Singleton
-public class ConsoleCustomLogger implements CustomLogger
+public class ConsoleLogger implements CustomLogger
 {
   @NotNull
   private final Logger logger;
 
-  public ConsoleCustomLogger()
+  public ConsoleLogger()
   {
     this.logger = LogManager.getLogger("consoleLogger");
   }
