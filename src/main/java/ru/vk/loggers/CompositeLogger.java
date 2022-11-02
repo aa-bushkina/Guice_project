@@ -5,6 +5,8 @@ import org.apache.log4j.LogManager;
 import org.apache.log4j.Logger;
 import org.jetbrains.annotations.NotNull;
 
+import java.util.concurrent.atomic.AtomicInteger;
+
 @Singleton
 public class CompositeLogger implements CustomLogger
 {
@@ -20,9 +22,9 @@ public class CompositeLogger implements CustomLogger
   }
 
   @Override
-  public void run(final int uniqueNum, @NotNull final String text, @NotNull final String tag)
+  public void run(@NotNull AtomicInteger uniqueNum, @NotNull final String text, @NotNull final String tag)
   {
-    consoleLogger.info(uniqueNum + " <" + tag + ">" + text + "</" + tag + ">");
-    fileLogger.info(uniqueNum+1 + " <" + tag + ">" + text + "</" + tag + ">");
+    consoleLogger.info(uniqueNum.getAndIncrement() + " <" + tag + ">" + text + "</" + tag + ">");
+    fileLogger.info(uniqueNum.getAndIncrement() + " <" + tag + ">" + text + "</" + tag + ">");
   }
 }

@@ -35,8 +35,7 @@ public class Application
       {
         text = scanner.nextLine();
         injector.getInstance(LogTypeFactory.valueOf(logType).handlerClass())
-          .makeLog(uniqueNum, text, tag);
-        uniqueNum+=2;
+          .makeLog(text, tag);
       }
     } catch (IllegalStateException | NoSuchElementException e)
     {
