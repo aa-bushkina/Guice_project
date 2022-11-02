@@ -1,4 +1,4 @@
-package ru.vk;
+package ru.vk.loggers;
 
 import org.jetbrains.annotations.NotNull;
 import ru.vk.handlers.CompositeLogHandler;

@@ -3,6 +3,7 @@ package ru.vk;
 import com.google.inject.AbstractModule;
 import org.jetbrains.annotations.NotNull;
 import ru.vk.handlers.LogHandler;
+import ru.vk.loggers.LogTypeFactory;
 
 import java.util.Arrays;
 
