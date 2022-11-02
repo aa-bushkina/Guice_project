@@ -1,50 +1,41 @@
 package ru.vk;
 
-import com.google.inject.Guice;
-import com.google.inject.Injector;
+import com.google.inject.Inject;
 import org.jetbrains.annotations.NotNull;
+import ru.vk.handlers.LogHandler;
 
-import java.util.Arrays;
 import java.util.NoSuchElementException;
 import java.util.Scanner;
 
 public class Application
 {
-  static private Injector injector;
+  @NotNull
+  final private Tag tag;
+  @NotNull
+  final private LogHandler logHandler;
 
-  public static void main(@NotNull String[] args)
+  @Inject
+  public Application(@NotNull final Tag tag, @NotNull final LogHandler logHandler)
   {
-    injector = Guice.createInjector(new TextHandlerModule());
-    injector.getInstance(Application.class).waitForInput(args);
+    this.tag = tag;
+    this.logHandler = logHandler;
+    waitForInput();
   }
 
-  public void waitForInput(@NotNull String[] args)
+  private void waitForInput()
   {
-    if (!checkArgs(args))
-    {
-      throw new RuntimeException("Incorrect args.");
-    }
-    String logType = args[0];
-    String tag = args[1];
-    try (Scanner scanner = new Scanner(System.in))
+    try (final Scanner scanner = new Scanner(System.in))
     {
       String text;
-      int uniqueNum = 0;
       System.out.println("Waiting for new lines. Key in Ctrl+D to exit.");
       while (true)
       {
         text = scanner.nextLine();
-        injector.getInstance(LogTypeFactory.valueOf(logType).handlerClass())
-          .makeLog(text, tag);
+        logHandler.makeLog(text, tag.getText());
       }
     } catch (IllegalStateException | NoSuchElementException e)
     {
       e.printStackTrace();
     }
-  }
-
-  public boolean checkArgs(@NotNull String[] args)
-  {
-    return (args.length == 2) && (Arrays.asList("File", "Console", "Composite").contains(args[0]));
   }
 }

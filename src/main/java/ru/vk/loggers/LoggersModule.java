@@ -1,16 +1,12 @@
-package ru.vk;
+package ru.vk.loggers;
 
 import com.google.inject.AbstractModule;
 import com.google.inject.Singleton;
-import ru.vk.loggers.CompositeLogger;
-import ru.vk.loggers.ConsoleLogger;
-import ru.vk.loggers.CustomLogger;
-import ru.vk.loggers.FileLogger;
 import ru.vk.notations.Composite;
 import ru.vk.notations.Console;
 import ru.vk.notations.File;
 
-public class TextHandlerModule extends AbstractModule
+public class LoggersModule extends AbstractModule
 {
   @Override
   protected void configure()
